@@ -1,0 +1,19 @@
+{% extends 'brake_web/base.html'%}
+
+{% block content %}
+<h1>Current Packages</h1>
+<ul>
+  {% for pkg in packages %}
+    <li><b><a href = "{% url 'ViewPackage' pkg.id %}">{{pkg.name}}</a></b>
+      {%if pkg.description %} - {{pkg.description}} {%endif%}</li>
+  {% endfor %}
+</ul>
+
+<h2>{{error}}</h2>
+<form method="POST" >
+  {% csrf_token %}
+
+{{form.as_p}}
+<button type = "submit">Add Package</button>
+</form>
+{% endblock %}

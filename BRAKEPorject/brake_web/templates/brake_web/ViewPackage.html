@@ -1,0 +1,15 @@
+{% extends 'brake_web/base.html'%}
+
+{% block content %}
+
+<h2>{{error}}</h2>
+<h1>Package</h1>
+{{package.name}}
+
+<form method="POST">
+  {% csrf_token %}
+
+{{form.as_p}}
+<button type = "submit">Update</button>
+</form>
+{% endblock %}

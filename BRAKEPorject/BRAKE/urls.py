@@ -33,6 +33,9 @@ urlpatterns = [
 
     # Public
     path( '', brake_web_views.home, name='home'),
+    path( 'CurrentPackages/', brake_web_views.currentRPackages, name='CurrentPackages'),
+    path( 'addpackage/', brake_web_views.addpackage, name='addpackage'),
+    path( 'package/<int:RPack_pk>', brake_web_views.ViewPackage, name='ViewPackage'),
 
     # brake_secure urls
     #path('secure/', brake_secure_views.securehome, name ='securehome'),
