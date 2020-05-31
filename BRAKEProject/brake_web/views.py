@@ -42,7 +42,7 @@ def logoutuser(request):
         logout( request )
         return redirect( 'home' )
 
-def currentRPackages(request):
+def CurrentPackages(request):
     packages = RPack.objects.all()
     return render( request, 'brake_web/CurrentPackages.html', {'packages':packages})
 
@@ -61,9 +61,9 @@ def ViewPackage(request, RPack_pk):
         except ValueError:
             return render( request,  'brake_web/ViewPackage.html', {'package':package, 'form':form, 'error':'Bad data passed in'})
 
-def addpackage(request):
+def AddNewPackage(request):
     if request.method == "GET":
-        return render( request, 'brake_web/addpackage.html' , {'form':RPackForm()})
+        return render( request, 'brake_web/AddNewPackage.html' , {'form':RPackForm()})
     else:
         # User is posting to add a new prackage
         try:
@@ -73,4 +73,4 @@ def addpackage(request):
             newRPack.save()
             return redirect( 'home' )  #TODO: This should go back to the list of packages.
         except ValueError:
-            return render( request, 'brake_web/addpackage.html' , {'form':RPackForm(), 'error':'Bad data passed in'})
+            return render( request, 'brake_web/AddNewPackage.html' , {'form':RPackForm(), 'error':'Bad data passed in'})

@@ -33,8 +33,8 @@ urlpatterns = [
 
     # Public
     path( '', brake_web_views.home, name='home'),
-    path( 'CurrentPackages/', brake_web_views.currentRPackages, name='CurrentPackages'),
-    path( 'addpackage/', brake_web_views.addpackage, name='addpackage'),
+    path( 'CurrentPackages/', brake_web_views.CurrentPackages, name='CurrentPackages'),
+    path( 'AddNewPackage/', brake_web_views.AddNewPackage, name='AddNewPackage'),
     path( 'package/<int:RPack_pk>', brake_web_views.ViewPackage, name='ViewPackage'),
 
     # brake_secure urls
