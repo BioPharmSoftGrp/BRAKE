@@ -4,4 +4,4 @@ from brake_secure.models import RPack
 class RPackForm(ModelForm):
     class Meta:
         model = RPack
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'autor', 'maintainer', 'keywords', 'cranLink', 'website']

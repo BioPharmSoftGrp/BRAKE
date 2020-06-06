@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+
+from django.contrib.auth.decorators import login_required
 from BRAKE.forms import RPackForm
 from brake_secure.models import RPack
 
@@ -35,7 +37,7 @@ def loginuser(request):
             return render( request, 'brake_web/loginuser.html' , {'form':AuthenticationForm(), 'error':'Username and password did not match.'})
         else:
             login(request, user)
-            return( redirect( '../secure') )
+            return( redirect( 'home') )
 
 def logoutuser(request):
     if request.method == "POST":
@@ -61,16 +63,30 @@ def ViewPackage(request, RPack_pk):
         except ValueError:
             return render( request,  'brake_web/ViewPackage.html', {'package':package, 'form':form, 'error':'Bad data passed in'})
 
+
 def AddNewPackage(request):
     if request.method == "GET":
         return render( request, 'brake_web/AddNewPackage.html' , {'form':RPackForm()})
     else:
         # User is posting to add a new prackage
         try:
+
+            user = request.user
+            bBpsuser = False
+            if not user.is_authenticated:
+                #TODO: BAD PRACTICE TO USE USER NAME AND PASSWORD RIGHT HERE BUT CHECING THE IDEA
+                user = authenticate( request, username = 'bpsuser.20' , password = 'get.Smart_20')
+                bBpsuser = True
+                login(request, user)
+
             form = RPackForm( request.POST )
             newRPack = form.save( commit = False )
-            newRPack.user = request.user
+            newRPack.user = user
             newRPack.save()
+
+            if bBpsuser:
+                logout( request )
+
             return redirect( 'home' )  #TODO: This should go back to the list of packages.
         except ValueError:
             return render( request, 'brake_web/AddNewPackage.html' , {'form':RPackForm(), 'error':'Bad data passed in'})

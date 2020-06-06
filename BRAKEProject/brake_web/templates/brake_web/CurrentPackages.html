@@ -3,16 +3,32 @@
 {% block content %}
 
 TODO: We need to add filters, search ect
-<input type="text" ></input>
+<input type="text" ></input><button type = "submit">Search</button>
 
 <h1>Current Packages</h1>
-<button type = "submit">Search</button>
-<ul>
-  {% for pkg in packages %}
-    <li><b><a href = "{% url 'ViewPackage' pkg.id %}">{{pkg.name}}</a></b>
-      {%if pkg.description %} - {{pkg.description}} {%endif%}. Version  {{ pkg.versionString }}</li>
-  {% endfor %}
-</ul>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Version</th>
+      <th scope="col">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pkg in packages %}
+      <tr>
+        <th scope="row"><a href = "{% url 'ViewPackage' pkg.id %}">{{pkg.name}}</a></th>
+        <td>{{pkg.description|truncatechars:100 }}</td>
+        <td> {{ pkg.versionString }}</td>
+        <td> </td>
+      </tr>
+
+    {% endfor %}
+
+  </tbody>
+</table>
 
 <h2>{{error}}</h2>
 <form method="POST" >
