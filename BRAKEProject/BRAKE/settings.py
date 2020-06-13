@@ -25,7 +25,7 @@ SECRET_KEY = '^k0%#xw(+py%wpb#d*9n27x%)ebwy0(#%*5xntd_xm3714e_@f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['biopharmsoft.pythonanywhere.com']
 
 
 # Application definition
