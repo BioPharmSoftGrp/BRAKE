@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^k0%#xw(+py%wpb#d*9n27x%)ebwy0(#%*5xntd_xm3714e_@f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['biopharmsoft.pythonanywhere.com']
 
@@ -121,3 +121,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Change for local settings
+try:
+    from .local_settings import *
+except ImportError:
+    print( "Looks like no local file you must be on produciton.")
