@@ -5,7 +5,7 @@ class RPack( models.Model ):
     created = models.DateTimeField( auto_now_add=True)  # This is the date the record was added and is not something we can change, set automatically
     name = models.CharField( max_length = 100)
     description = models.TextField( blank = True )
-    autor = models.TextField( blank = True )
+    author = models.TextField( blank = True )
     maintainer = models.TextField( blank = True )
     keywords = models.TextField( blank = True )
     cranLink = models.URLField( blank = True )

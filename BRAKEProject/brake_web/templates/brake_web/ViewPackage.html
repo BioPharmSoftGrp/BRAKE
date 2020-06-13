@@ -2,14 +2,97 @@
 
 {% block content %}
 
-<h2>{{error}}</h2>
-<h1>Package</h1>
-{{package.name}}
+<div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>View Package</h2>
+            <h3> TODO: This is currently viewing as an input form but if the user is not the owner then no updates allowed</h3>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-5">
 
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
 <form method="POST">
   {% csrf_token %}
 
-{{form.as_p}}
+  <div class="form-group">
+      <label for="name">Package Name</label>
+      <input type="text" name="name" class="form-control" id="name" value = "{{package.name}}" required>
+  </div>
+  <div class="form-group">
+      <label for="description">Description</label>
+      <textarea name="description" class="form-control" id="description" value = "{{package.description}}"></textarea>
+  </div>
+  <div class="form-group">
+      <label for="author">Author(s)</label>
+      <input type="text"  name="author" class="form-control" id="author" value = "{{package.author}}"></textarea>
+  </div>
+  <div class="form-group">
+      <label for="maintainer">Maintainer(s)</label>
+      <input type="text"  name="maintainer" class="form-control" id="maintainer" value = "{{package.maintainer}}"></textarea>
+  </div>
+  <div class="form-group">
+      <label for="keywords">Keyword(s) - Seperate phrases with a ; </label>
+      <input type="text"  name="keywords" class="form-control" id="keywords"  value = "{{package.keywords}}" ></textarea>
+  </div>
+  <div class="form-group">
+      <label for="cranLink">CRAN Link </label>
+      <input type="text"  name="cranLink" class="form-control" id="cranLink" value = "{{package.cranLink}}" ></textarea>
+  </div>
+
+
+    <div class="form-group">
+        <label for="website">Website </label>
+        <input type="text"  name="website" class="form-control" id="website" value = "{{package.website}}" ></input>
+
+    </div>
+
+
+
+
+      <div class="form-row">
+         <div class="col-7">
+        <label > Version</label>
+        </div>
+        <div class="col-5">
+          <label> Version Date</label>
+        </div>
+
+    <div class="form-row" >
+
+       <div class="col-1">
+          <input type="number"  name="versionMajor" class="form-control" id="versionMajor"  value = "{{package.versionMajor}}">
+       </div>
+        <div class="col-1" >
+          .
+        </div>
+        <div class="form-group col-1">
+               <input type="number"  name="versionMinor" class="form-control" id="versionMidnor" value = "{{package.versionMinor}}" >
+        </div>
+         <div class="form-group col-1">
+           .
+         </div>
+         <div class="form-group col-1">
+                <input type="number"  name="versionPatch" class="form-control" id="versionPatch" value = "{{package.versionPatch}}">
+         </div>
+          <div class="form-group col-1">
+            .
+          </div>
+          <div class="form-group col-1">
+                 <input type="number"  name="versionBuild" class="form-control" id="versionBuild" value = "{{package.versionBuild}}">
+          </div>
+
+          <div class="form-group col-lg-5">
+                 <input type="date"  name="last_version_date" class="form-control" id="last_version_date" value = "{{package.last_version_date}}">
+          </div>
+
+        </div>
 <button type = "submit">Update</button>
 </form>
+</div>
+</div>
 {% endblock %}
