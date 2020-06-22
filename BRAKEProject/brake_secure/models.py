@@ -15,6 +15,7 @@ class RPack( models.Model ):
     versionMinor =  models.IntegerField(  default = 0)
     versionPatch = models.IntegerField( default = 0 )
     versionBuild = models.IntegerField( default = 0)
+    
 
     approved = models.BooleanField(  default = False)                     # Whenever a new package is added somone needs to reveiw and approve
     user = models.ForeignKey( User, on_delete= models.CASCADE ) # User that the package belongs do in this system, eg the owner of this recor
