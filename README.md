@@ -84,7 +84,8 @@ To setup a development environment for BRAKE:
    This will a create `db.sqlite3` file in the
    [BRAKEProject](BRAKEProject) folder.
    
-2. Create a `.local_settings.py` file with the following contents:
+2. Create a file in [BRAKEProject/BRAKE](BRAKEProject/BRAKE) called
+   `local_settings.py` with the following contents:
    
    ```python
    # Development Settings
