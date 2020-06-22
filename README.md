@@ -62,3 +62,39 @@ https://gsdesign.shinyapps.io/prod/ for example)
 - Do we need other categories, such as: safety monitoring?
 - Do we need a sub-category such as Trial Design -> Dose finding,
   Trial Design -> Platform trials, randomized trials?
+
+## Setup Dev Environment
+
+To setup a development environment for BRAKE:
+
+0. Install django
+   
+   ```
+   $ pip install django
+   ```
+   
+1. Initialize the sqlite3 database
+   
+   ```
+   $ ./cd BRAKEProject
+   $ python manage.py makemigrations
+   $ python manage.py migrate
+   ```
+   
+   This will a create `db.sqlite3` file in the
+   [BRAKEProject](BRAKEProject) folder.
+   
+2. Create a `.local_settings.py` file with the following contents:
+   
+   ```python
+   # Development Settings
+   # IMPORTANT: Remove when merging into master.
+   
+   DEBUG = True
+   ALLOWED_HOSTS = ['127.0.0.1']
+   ```
+   
+   This file is sourced by
+   [settings.py](BRAKEProject/BRAKE/settings.py), and will let django
+   allow your browser's connection.
+
