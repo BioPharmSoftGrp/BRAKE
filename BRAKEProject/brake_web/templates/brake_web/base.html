@@ -9,45 +9,78 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
     <title>BRAKE</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">BRAKE</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+      <a class="navbar-brand" href="#">BRAKE</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-      <li class="nav-item active">
-        <a class="nav-link" href="../">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/CurrentPackages">Search Packages</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/AddNewPackage">Add New Package</a>
-      </li>
-      <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li> -->
+        {% if currentPage == "CurrentPackages" %}
+          <form action="/CurrentPackages/">
+            <label for="CurrentPackages-search" class="sr-only">Search BRAKE</label>
+            <div class="input-group">
+              <!-- TODO: make the searchbar be a bit longer -->
+              {% if searchQuery %}
+              <input type="search" id ="CurrentPackages-search" name="search"
+                     class="form-control form-control-lg"
+                     value="{{ searchQuery }}"
+                     placeHolder="Search" aria-label="Search" />
+              {% else %}
+              <input type="search" id ="CurrentPackages-search" name="search"
+                     class="form-control form-control-lg"
+                     placeHolder="Search" aria-label="Search" />
+              {% endif %}
+              <!-- TODO: have an actual search icon here (possibly via FontAwesome) -->
+              <!-- TODO: fix styling with search button (same color as navbar, too little contrast) -->
+              <div class="input-group-append" class="homepage-banner--search">
+                <button type="submit" class="btn btn-primary" id="homepage-search-button">🔍</button>
+              </div>
+            </div>
+          </form>
+        {% endif %}
 
+        
+        <ul class="navbar-nav ml-auto">
+        <!-- HOME PAGE -->  
+          {% if currentPage == "home" %}
+          <li class="nav-item active">
+            <a class="nav-link" href="../">Home <span class="sr-only">(current)</span></a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="../">Home</span></a>
+          </li>
+          {% endif %}
 
-      {% if user.is_authenticated %}
+          <!-- CURRENT PACKAGES -->
+          {% if currentPage == "CurrentPackages" %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/CurrentPackages">Search Packages<span class="sr-only">(current)</span></a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/CurrentPackages">Search Packages</a>
+          </li>
+          {% endif %}
+
+          <!-- ADD NEW PACKAGE -->
+          {% if currentPage == "AddNewPackage" %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/AddNewPackage">Add New Package<span class="sr-only">(current)</span></a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/AddNewPackage">Add New Package</a>
+          </li>
+          {% endif %}
+
+          <!-- WELCOME USER -->
+          {% if user.is_authenticated %}
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,38 +89,32 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">Account</a>
                 <div class="dropdown-divider"></div>
-                  <form action = "{% url 'logoutuser' %}" method = "POST">
-                    {% csrf_token %}
+                <form action = "{% url 'logoutuser' %}" method = "POST">
+                  {% csrf_token %}
                   <button type = "submit"  class="dropdown-item"  style=" border: none;outline: none;background: none;  cursor: pointer;
-                  text-decoration:none;  font-family: inherit;font-size: inherit;">Logout</button>
-                  </form>
-               </div>
-             </li>
-      {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href = "{% url 'signupuser' %}">Sign up</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href = "{% url 'loginuser' %}">Login</a>
-        </li>
-      {% endif %}
+                                  text-decoration:none;  font-family: inherit;font-size: inherit;">Logout</button>
+                </form>
+              </div>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href = "{% url 'signupuser' %}">Sign up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href = "{% url 'loginuser' %}">Login</a>
+            </li>
+          {% endif %}
+        </ul>
 
-
-
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
+      </div>
+    </nav>
 
     {% block content %}
-    <form action = "{% url 'logoutuser' %}" method = "POST">
-      {% csrf_token %}
+      <form action = "{% url 'logoutuser' %}" method = "POST">
+        {% csrf_token %}
 
-    <button type = "submit" >Logout</button>
-    </form>
+        <button type = "submit" >Logout</button>
+      </form>
     {% endblock %}
 
     <!-- Optional JavaScript -->

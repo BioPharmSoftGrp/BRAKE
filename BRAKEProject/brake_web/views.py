@@ -10,7 +10,7 @@ from brake_secure.models import RPack
 
 # Create your views here.
 def home( request ):
-    return render( request, 'brake_web/home.html')
+    return render(request, 'brake_web/home.html', {'currentPage':'home'})
 
 def signupuser(request):
     if request.method == "GET":
@@ -45,8 +45,22 @@ def logoutuser(request):
         return redirect( 'home' )
 
 def CurrentPackages(request):
-    packages = RPack.objects.all()
-    return render( request, 'brake_web/CurrentPackages.html', {'packages':packages})
+    # TODO: sanitize query
+    query = request.GET.get('search', None)
+
+    # Super basic search. Splits the query string into words and
+    # only includes packages that have at least one of those words
+    # in its name, description, author, or maintainer. Case insensitive.
+    packages = RPack.objects.all() if query in [[], '', None] else \
+        [pack for pack in RPack.objects.all() if
+         any(word.lower() in pack.name.lower()
+             or word.lower() in pack.description.lower()
+             or word.lower() in pack.author.lower()
+             or word.lower() in pack.maintainer.lower()
+             for word in query.split())]
+    
+    return render(request, 'brake_web/CurrentPackages.html',
+                  {'currentPage':'CurrentPackages','packages':packages, 'searchQuery':query})
 
 
 def ViewPackage(request, RPack_pk):
@@ -54,19 +68,22 @@ def ViewPackage(request, RPack_pk):
     package = get_object_or_404( RPack, pk = RPack_pk )
     if request.method == "GET":
         form = RPackForm(instance = package)
-        return render( request, 'brake_web/ViewPackage.html', {'package':package, 'form':form})
+        return render( request, 'brake_web/ViewPackage.html',
+                       {'currentPage':'ViewPackage','package':package, 'form':form})
     else:
         try:
             form = RPackForm( request.POST, instance=package )
             form.save()
             return redirect( 'CurrentPackages' )
         except ValueError:
-            return render( request,  'brake_web/ViewPackage.html', {'package':package, 'form':form, 'error':'Bad data passed in'})
-
+            return render( request,  'brake_web/ViewPackage.html',
+                           {'currentPage':'ViewPackage', 'package':package,
+                            'form':form, 'error':'Bad data passed in'})
 
 def AddNewPackage(request):
     if request.method == "GET":
-        return render( request, 'brake_web/AddNewPackage.html' , {'form':RPackForm()})
+        return render( request, 'brake_web/AddNewPackage.html',
+                       {'currentPage':'AddNewPackage','form':RPackForm()})
     else:
         # User is posting to add a new prackage
         try:
@@ -89,4 +106,6 @@ def AddNewPackage(request):
 
             return redirect( 'home' )  #TODO: This should go back to the list of packages.
         except ValueError:
-            return render( request, 'brake_web/AddNewPackage.html' , {'form':RPackForm(), 'error':'Bad data passed in'})
+            return render( request, 'brake_web/AddNewPackage.html' ,
+                           {'currentPage':'AddNewPackage', 'form':RPackForm(),
+                            'error':'Bad data passed in'})
