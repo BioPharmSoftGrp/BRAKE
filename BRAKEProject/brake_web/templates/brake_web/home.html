@@ -1,7 +1,34 @@
 {% extends 'brake_web/base.html'%}
 
+<!-- TODO: ??? -->
 {% block content %}
-Public home<br><br>
+
+<div class='main'>
+  <div class="homepage-banner--search">
+    <!-- 
+         TODO:  
+         - this div should stretch across the page (think the homepage for https://pypi.org/)
+         - the contents of this div should be centered 
+      -->
+    <h1 class="homepage-banner__title">
+      Find, install and publish R packages with the Biopharm R pAcKge Explorer
+    </h1>
+    <form class="search-form search-form--fullwidth" action="/CurrentPackages/">
+      <input type="search" placeHolder="Search" aria-label="Search" />
+      <!-- TODO: have an actual search icon here (possibly via FontAwesome) -->
+      <button id="homepage-search-button">🔍</button>
+    </form>
+
+    <p class="homepage-banner--browse">Or <a href="/CurrentPackages/">browse packages</a></p>
+    
+  </div>
+  <div class="homepage-banner--statistics">
+    <p> TODO: Site Statistics </p>
+  </div>
+</div>
+
+
+
 This page is the home page of the site.<br>
 This is the page where we will show the R packages that have been added.<br>
 We will inlclue a search for packages, link to add new package.<br>
