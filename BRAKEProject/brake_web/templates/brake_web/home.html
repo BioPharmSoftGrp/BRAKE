@@ -1,39 +1,44 @@
+<!-- -*- engine:django -*- -->
+
+
 {% extends 'brake_web/base.html'%}
 
-<!-- TODO: ??? -->
 {% block content %}
-
-<div class='main'>
-  <div class="homepage-banner--search">
-    <!-- 
-         TODO:  
-         - this div should stretch across the page (think the homepage for https://pypi.org/)
-         - the contents of this div should be centered 
-      -->
-    <h1 class="homepage-banner__title">
-      Find, install and publish R packages with the Biopharm R pAcKge Explorer
-    </h1>
-    <form class="search-form search-form--fullwidth" action="/CurrentPackages/">
-      <input type="search" placeHolder="Search" aria-label="Search" />
-      <!-- TODO: have an actual search icon here (possibly via FontAwesome) -->
-      <button id="homepage-search-button">🔍</button>
-    </form>
-
-    <p class="homepage-banner--browse">Or <a href="/CurrentPackages/">browse packages</a></p>
-    
+  <div class='main'>
+    <!-- Source: https://stackoverflow.com/a/42646895 -->
+    <div class="jumbotron d-flex align-items-center min-vh-30">
+      <div class="container text-center">
+        <h1 class="homepage-banner__title">
+          Find, install and publish R packages with the
+          <br>
+          Biopharm R pAcKge Explorer
+        </h1>
+        <form action="/CurrentPackages/">
+          <label for="homepage-search" class="sr-only">Search BRAKE</label>
+          <div class="input-group" class="homepage-banner--search">
+            <input type="search" id ="homepage-search"
+                   class="form-control form-control-lg"
+                   placeHolder="Search" aria-label="Search" />
+            <!-- TODO: have an actual search icon here (possibly via FontAwesome) -->
+            <div class="input-group-append" class="homepage-banner--search">
+              <button type="submit" class="btn btn-primary" id="homepage-search-button">🔍</button>
+            </div>
+          </div>
+        </form>
+        <hr class="my-4">
+        <div>
+          <p> TODO: Site Statistics </p>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="homepage-banner--statistics">
-    <p> TODO: Site Statistics </p>
-  </div>
-</div>
 
+  This page is the home page of the site.<br>
+  This is the page where we will show the R packages that have been added.<br>
+  We will inlclue a search for packages, link to add new package.<br>
+  Will have a tab/link for adding a new package.<br>
 
+  When a user has created a user account they will be able to access the secure
+  part of the site that allows them to manage the packages they own.
 
-This page is the home page of the site.<br>
-This is the page where we will show the R packages that have been added.<br>
-We will inlclue a search for packages, link to add new package.<br>
-Will have a tab/link for adding a new package.<br>
-
-When a user has created a user account they will be able to access the secure
-part of the site that allows them to manage the packages they own.
-{% endblock %}
+{% endblock content %}
